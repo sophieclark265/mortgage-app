@@ -34,6 +34,8 @@ public class Main {
     }
 
     public static void getInterestRate(int principal) {
+        // need to prompt user with system.print
+        // otherwise they won't know scanner is listening for their input
         System.out.print("Your estimated annual interest rate:");
         Scanner scannerInterest = new Scanner(System.in);
         // Scanner class lets us create scanner objects
@@ -47,13 +49,13 @@ public class Main {
     }
 
     public static void getLoanTerm(int principal, double monthlyInterest) {
-        System.out.print("How long is the loan term in years?");
+        System.out.print("Your loan term (in years):");
         Scanner loanTerm = new Scanner(System.in);
+        byte years = loanTerm.nextByte();
 
         int max = 35;
         int min = 5;
 
-        byte years = loanTerm.nextByte();
         int compMax = Integer.compare(years, min); // if x smaller than y, return -1
         int compMin = Integer.compare(years, max); // if x greater than y, return 1
 
