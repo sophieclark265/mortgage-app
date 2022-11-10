@@ -1,4 +1,11 @@
+package calculator;
+
+import input.QueryUser;
+import input.NumberConverter;
+
 import java.util.Scanner;
+
+
 
 public class MortgageCalculator {
 
@@ -78,7 +85,9 @@ public class MortgageCalculator {
         float denom = monthlyTimesPayments - (float)1;
 
 
-        float result = (float)principal * (numerator / denom);
-        System.out.println("Your monthly mortgage is " + result);
+        float numberResultNoCurrency = (float)principal * (numerator / denom);
+        String currencyResult = NumberConverter.convertToDollars(numberResultNoCurrency);
+        System.out.println("Your monthly payment is: " + currencyResult);
     }
+
 }
