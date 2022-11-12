@@ -9,7 +9,23 @@ import java.util.Scanner;
 
 public class MortgageCalculator {
 
-    public static void getPrincipal() {
+    public static void calculate() {
+        boolean inputsCorrect = false;
+
+        int principal = 0;
+        double interestRate = 0;
+        int loanTerm = 0;
+
+        while(!inputsCorrect) {
+            principal = getPrincipal();
+            interestRate = getInterestRate();
+            loanTerm = getLoanTerm();
+            inputsCorrect = checkInputsCorrect();
+        }
+            outputMonthlyMortgageEstimate(principal, interestRate, loanTerm);
+    }
+
+    public static int getPrincipal() {
         System.out.print("Enter the amount you need to borrow:");
         String errorMessage = "Please enter a whole number.";
 
@@ -25,11 +41,12 @@ public class MortgageCalculator {
             getPrincipal();
         }
 
+        return principal;
+
         // create principal primitive type that will hold estimated cost in int typeSystem.out.println("Your principal is: " + principal);
-        getInterestRate(principal);
     }
 
-    public static void getInterestRate(int principal) {
+    public static double getInterestRate() {
         int monthsInYear = 12;
         int percent = 100;
         System.out.print("Your estimated annual interest rate:");
@@ -39,15 +56,16 @@ public class MortgageCalculator {
 
         if (annualInterest > 30) {
             System.out.println("Please enter a rate less than 30%");
-            getInterestRate(principal);
+            return getInterestRate();
         }
+
+
         double monthlyInterest = (annualInterest / (double)monthsInYear) / (double)percent;
-
-
-        getLoanTerm(principal, monthlyInterest);
+        System.out.println("monthly interest is: " + monthlyInterest);
+        return monthlyInterest;
     }
 
-    public static void getLoanTerm(int principal, double monthlyInterest) {
+    public static int getLoanTerm() {
         System.out.print("Your loan term (in years):");
 
         String errorMessage = "Please enter a number of years.";
@@ -58,26 +76,24 @@ public class MortgageCalculator {
 
         if (loanTermInYears > max) {
             System.out.println("Max loan term is 35 years. Please decrease loan term.");
-            getLoanTerm(principal, monthlyInterest);
+            getLoanTerm();
         } else if (loanTermInYears < min) {
             System.out.println("Minimum loan term is 5 years. Please increase loan term.");
-            getLoanTerm(principal, monthlyInterest);
+            getLoanTerm();
         }
 
-        int numberOfMonthlyPayments = loanTermInYears * 12;
-
-        checkInputsCorrect(principal, monthlyInterest, numberOfMonthlyPayments);
+        return loanTermInYears * 12;
     }
 
-    public static void checkInputsCorrect(int principal, double monthlyInterest, int loanPayments) {
+    public static boolean checkInputsCorrect() {
         System.out.println("Are all these inputs correct? Enter Y or N");
         Scanner checkFinalNumbers = new Scanner(System.in);
         String yesOrNo = checkFinalNumbers.nextLine();
 
         if (yesOrNo.equalsIgnoreCase("Y") || yesOrNo.equalsIgnoreCase("Yes")) {
-            outputMonthlyMortgageEstimate(principal, monthlyInterest, loanPayments);
+            return true;
         } else {
-            getPrincipal();
+            return false;
         }
     }
 
