@@ -30,12 +30,18 @@ public class MortgageCalculator {
     }
 
     public static void getInterestRate(int principal) {
-
+        int monthsInYear = 12;
+        int percent = 100;
         System.out.print("Your estimated annual interest rate:");
 
         String errorMessage = "Please enter a decimal number.";
         double annualInterest = QueryUser.queryUserForDouble(errorMessage);
-        double monthlyInterest = (annualInterest / (double)12) / (double)100;
+
+        if (annualInterest > 30) {
+            System.out.println("Please enter a rate less than 30%");
+            getInterestRate(principal);
+        }
+        double monthlyInterest = (annualInterest / (double)monthsInYear) / (double)percent;
 
 
         getLoanTerm(principal, monthlyInterest);
